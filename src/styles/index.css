@@ -17,6 +17,7 @@ body {
   box-sizing: inherit;
   font-size: inherit;
   line-height: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 p {
@@ -28,4 +29,8 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.touch-action:active {
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.1);
 }
