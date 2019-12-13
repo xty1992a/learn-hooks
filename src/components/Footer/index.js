@@ -1,33 +1,47 @@
-import React from 'react';
+import React from "react";
 import "./index.less";
-import {Link, useLocation, useRouteMatch} from "react-router-dom";
-import menu_my from 'assets/icons/menu_my.svg';
+import { useLocation, NavLink } from "react-router-dom";
+import Icon from "components/Icon";
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
+function usePath() {
+  return useLocation().pathname;
 }
 
+const menus = [
+  {
+    path: "/home",
+    name: "Home",
+    getIcon: path => (path === "/home" ? "menu_home" : "menu_home_o")
+  },
+  {
+    path: "/about",
+    name: "About",
+    getIcon: path => (path === "/about" ? "menu_bill" : "menu_bill_o")
+  },
+  {
+    path: "/my",
+    name: "My",
+    getIcon: path => (path === "/my" ? "menu_my" : "menu_my_o")
+  }
+];
 
 export default function Footer() {
-  const query = useQuery();
-  let {path, url} = useRouteMatch();
-  console.log(url, path, query.get('id'));
+  const path = usePath();
   return (
     <div className="footer">
-      <ul className="footer-menus">
-        <li className="footer-menu touch-action">
-          <Link to="/about?id=asdf">
-            <img src={menu_my} alt=""/>
-            <p>About</p>
-          </Link>
-        </li>
-        <li className="footer-menu touch-action">
-          <Link to="/home">
-            <img src={menu_my} alt=""/>
-            <p>Home</p>
-          </Link>
-        </li>
-      </ul>
+      <div className="footer-menus">
+        {menus.map(menu => (
+          <NavLink
+            to={menu.path}
+            key={menu.path}
+            className="footer-menu touch-action"
+          >
+            {/*<img src={menu.getIcon(path)} alt=""/>*/}
+            <Icon name={menu.getIcon(path)} />
+            <p>{menu.name}</p>
+          </NavLink>
+        ))}
+      </div>
     </div>
   );
 }
